@@ -1,9 +1,10 @@
 ﻿using Spectre.Console.Cli;
 using Timelapse.CLI.Application.ApplicationServices.Interfaces;
+using Timelapse.CLI.Views;
 
 namespace Timelapse.CLI.Commands
 {
-    internal sealed class ListCommand : AsyncCommand<ListCommand.Settings>
+    internal sealed class ListCommand(IPeriodService periodService) : AsyncCommand<ListCommand.Settings>
     {
         public class Settings : CommandSettings
         {
@@ -11,18 +12,14 @@ namespace Timelapse.CLI.Commands
             public bool Running { get; set; } = default!;
         }
 
-        private readonly IItemService _itemService;
-        private readonly IPeriodService _periodService;
-
-        public ListCommand(IItemService itemService, IPeriodService periodService)
-        {
-            _itemService = itemService;
-            _periodService = periodService;
-        }
+        private readonly IPeriodService _periodService = periodService;
 
         public override async Task<int> ExecuteAsync(CommandContext context, Settings settings)
         {
-            throw new NotImplementedException();
+            var periods = await _periodService.GetAsNoTracking(5, default);
+
+            TableView.Show(periods);
+            return 0;
         }
     }
 }

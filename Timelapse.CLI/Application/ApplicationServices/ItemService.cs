@@ -6,15 +6,11 @@ using Timelapse.CLI.Infraestructure.Data.Context;
 
 namespace Timelapse.CLI.Application.ApplicationServices
 {
-    public class ItemService : IItemService
+    public class ItemService(ApplicationDbContext context) : IItemService
     {
-        private readonly ApplicationDbContext _context;
-        public ItemService(ApplicationDbContext context)
-        {
-            _context = context;
-        }
+        private readonly ApplicationDbContext _context = context;
 
-        public async Task<ICollection<Item>> GetAsNoTracking(Expression<Func<Item, bool>> predicate, CancellationToken ct)
+        public async Task<IEnumerable<Item>> GetAsNoTracking(Expression<Func<Item, bool>> predicate, CancellationToken ct)
         {
             return await _context.Items
                 .Include(i => i.Periods)
@@ -38,13 +34,13 @@ namespace Timelapse.CLI.Application.ApplicationServices
                 .FirstOrDefaultAsync(ct);
         }
 
-        public async Task<ICollection<Item>> Get(CancellationToken ct)
+        public async Task<IEnumerable<Item>> Get(CancellationToken ct)
         {
             return await _context.Items
                 .ToListAsync(ct);
         }
 
-        public async Task<ICollection<Item>> Get(Expression<Func<Item, bool>> predicate, CancellationToken ct)
+        public async Task<IEnumerable<Item>> Get(Expression<Func<Item, bool>> predicate, CancellationToken ct)
         {
             return await _context.Items
                 .Where(predicate)

@@ -6,10 +6,10 @@ namespace Timelapse.CLI.Application.ApplicationServices.Interfaces
     public interface IItemService
     {
         Task<Item> Add(Item item, CancellationToken ct);
-        Task<ICollection<Item>> Get(CancellationToken ct);
-        Task<ICollection<Item>> Get(Expression<Func<Item, bool>> predicate, CancellationToken ct);
+        Task<IEnumerable<Item>> Get(CancellationToken ct);
+        Task<IEnumerable<Item>> Get(Expression<Func<Item, bool>> predicate, CancellationToken ct);
         Task<Item?> Get(string name, CancellationToken ct);
-        Task<ICollection<Item>> GetAsNoTracking(Expression<Func<Item, bool>> predicate, CancellationToken ct);
+        Task<IEnumerable<Item>> GetAsNoTracking(Expression<Func<Item, bool>> predicate, CancellationToken ct);
         Task<Item?> GetAsNoTracking(string name, CancellationToken ct);
         Task Remove(string name, CancellationToken ct);
         Task<Item> Update(Item item, CancellationToken ct);
