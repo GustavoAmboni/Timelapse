@@ -13,7 +13,7 @@ namespace Timelapse.CLI.Commands
             [CommandArgument(0, "<Name>")]
             public string Name { get; init; } = default!;
 
-            [CommandArgument(0, "[Description]")]
+            [CommandArgument(1, "[Description]")]
             [DefaultValue("")]
             public string Description { get; init; } = default!;
 
