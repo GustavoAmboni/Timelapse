@@ -6,19 +6,15 @@ using Timelapse.CLI.Infraestructure.Data.Context;
 
 namespace Timelapse.CLI.Application.ApplicationServices
 {
-    public class PeriodService : IPeriodService
+    public class PeriodService(ApplicationDbContext context) : IPeriodService
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context = context;
 
-        public PeriodService(ApplicationDbContext context)
-        {
-            _context = context;
-        }
-
-        public async Task<ICollection<Period>> GetAsNoTracking(Expression<Func<Period, bool>> predicate, CancellationToken ct)
+        public async Task<IEnumerable<Period>> GetAsNoTracking(Expression<Func<Period, bool>> predicate, CancellationToken ct)
         {
             return await _context.Periods
                 .Where(predicate)
+                .Include(i => i.Item)
                 .AsNoTracking()
                 .ToListAsync(ct);
         }
@@ -30,13 +26,13 @@ namespace Timelapse.CLI.Application.ApplicationServices
                 .FirstOrDefaultAsync(ct);
         }
 
-        public async Task<ICollection<Period>> Get(CancellationToken ct)
+        public async Task<IEnumerable<Period>> Get(CancellationToken ct)
         {
             return await _context.Periods
                 .ToListAsync(ct);
         }
 
-        public async Task<ICollection<Period>> Get(Expression<Func<Period, bool>> predicate, CancellationToken ct)
+        public async Task<IEnumerable<Period>> Get(Expression<Func<Period, bool>> predicate, CancellationToken ct)
         {
             return await _context.Periods
                 .Where(predicate)
@@ -67,6 +63,15 @@ namespace Timelapse.CLI.Application.ApplicationServices
 
             _context.Remove(item);
             await _context.SaveChangesAsync(ct);
+        }
+
+        public async Task<IEnumerable<Period>> GetAsNoTracking(int take, CancellationToken ct)
+        {
+            return await _context.Periods
+                .Take(take)
+                .Include(i => i.Item)
+                .AsNoTracking()
+                .ToListAsync(ct);
         }
     }
 }

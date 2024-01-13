@@ -1,20 +1,19 @@
 ﻿using Spectre.Console.Cli;
 using System.ComponentModel;
-using System.Threading;
 using Timelapse.CLI.Application.ApplicationServices.Interfaces;
 using Timelapse.CLI.Entities;
 using Timelapse.CLI.Views;
 
 namespace Timelapse.CLI.Commands
 {
-    internal sealed class StartCommand : AsyncCommand<StartCommand.Settings>
+    internal sealed class StartCommand(IItemService itemService, IPeriodService periodService) : AsyncCommand<StartCommand.Settings>
     {
         public class Settings : CommandSettings
         {
             [CommandArgument(0, "<Name>")]
             public string Name { get; init; } = default!;
 
-            [CommandOption("-d|--description")]
+            [CommandArgument(0, "[Description]")]
             [DefaultValue("")]
             public string Description { get; init; } = default!;
 
@@ -24,14 +23,8 @@ namespace Timelapse.CLI.Commands
 
         }
 
-        private readonly IItemService _itemService;
-        private readonly IPeriodService _periodService;
-
-        public StartCommand(IItemService itemService, IPeriodService periodService)
-        {
-            _itemService = itemService;
-            _periodService = periodService;
-        }
+        private readonly IItemService _itemService = itemService;
+        private readonly IPeriodService _periodService = periodService;
 
         public override async Task<int> ExecuteAsync(CommandContext context, Settings settings)
         {

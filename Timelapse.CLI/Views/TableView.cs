@@ -5,7 +5,31 @@ namespace Timelapse.CLI.Views
 {
     internal static class TableView
     {
-        public static void Show(ICollection<Item> items)
+        public static void Show(IEnumerable<Period> periods)
+        {
+            var table = new Table();
+
+            table.AddColumns(
+                "#",
+                "Name",
+                "Started",
+                "Stoped",
+                "Comment");
+
+            foreach (var result in periods.Select((value, i) => new { Index = i, Value = value }))
+            {
+                table.AddRow(
+                    result.Index.ToString(),
+                    result.Value.Item.Name,
+                    result.Value.StartedAt.ToLocalTime().ToString("g"),
+                    result.Value.StoppedAt?.ToLocalTime().ToString("g") ?? "-",
+                    result.Value.Commentary ?? string.Empty);
+            }
+
+            AnsiConsole.Write(table);
+        }
+
+        public static void Show(IEnumerable<Item> items)
         {
             var table = new Table();
 

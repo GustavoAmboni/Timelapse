@@ -19,8 +19,23 @@ namespace Timelapse.CLI
             var app = new CommandApp(registrar);
 
             app.Configure(config =>
+            {
+#if DEBUG
+                config.PropagateExceptions();
+                config.ValidateExamples();
+#endif
+
                 config.AddCommand<StartCommand>("start")
-            );
+                    .WithAlias("s")
+                    .WithExample("start", "Test", "Testing somethig")
+                    .WithExample("start", "Test", "Testing somethig", "--link", "http://google.com")
+                    .WithExample("s", "Test", "Testing somethig", "-l", "http://google.com");
+
+
+                config.AddCommand<ListCommand>("list")
+                    .WithAlias("l")
+                    .WithExample("list");
+            });
 
             await app.RunAsync(args);
         }
