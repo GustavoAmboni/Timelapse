@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
+    },
+    "Start": {
+      "commandName": "Project",
+      "commandLineArgs": "start \"Teste do Juca\" --description \"Testando a atividade\""
+    }
+  }
+}
