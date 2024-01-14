@@ -26,15 +26,20 @@ namespace Timelapse.CLI
 #endif
 
                 config.AddCommand<StartCommand>("start")
-                    .WithAlias("s")
+                    .WithAlias("track")
+                    .WithAlias("t")
                     .WithExample("start", "Test", "Testing somethig")
                     .WithExample("start", "Test", "Testing somethig", "--link", "http://google.com")
-                    .WithExample("s", "Test", "Testing somethig", "-l", "http://google.com");
+                    .WithExample("t", "Test", "Testing somethig", "-l", "http://google.com");
 
 
                 config.AddCommand<ListCommand>("list")
                     .WithAlias("l")
                     .WithExample("list");
+
+                config.AddCommand<StopCommand>("stop")
+                    .WithAlias("finish")
+                    .WithExample("stop", "Pause for lunch");
             });
 
             await app.RunAsync(args);

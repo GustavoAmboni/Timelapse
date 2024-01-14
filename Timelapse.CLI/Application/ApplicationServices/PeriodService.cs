@@ -73,5 +73,15 @@ namespace Timelapse.CLI.Application.ApplicationServices
                 .AsNoTracking()
                 .ToListAsync(ct);
         }
+
+        public async Task<Period?> GetLastRunningPeriod(CancellationToken ct)
+        {
+            return await _context.Periods
+                .Include(i => i.Item)
+                .Where(w => !w.StoppedAt.HasValue)
+                .OrderByDescending(o => o.StartedAt)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(ct);
+        }
     }
 }

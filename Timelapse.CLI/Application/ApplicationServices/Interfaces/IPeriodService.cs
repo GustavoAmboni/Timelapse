@@ -13,5 +13,6 @@ namespace Timelapse.CLI.Application.ApplicationServices.Interfaces
         Task<IEnumerable<Period>> GetAsNoTracking(int Take, CancellationToken ct);
         Task Remove(int id, CancellationToken ct);
         Task<Period> Update(Period item, CancellationToken ct);
+        Task<Period?> GetLastRunningPeriod(CancellationToken ct);
     }
 }
