@@ -68,8 +68,9 @@ namespace Timelapse.CLI.Application.ApplicationServices
         public async Task<IEnumerable<Period>> GetAsNoTracking(int take, CancellationToken ct)
         {
             return await _context.Periods
-                .Take(take)
                 .Include(i => i.Item)
+                .Take(take)
+                .OrderByDescending(i => i.StartedAt)
                 .AsNoTracking()
                 .ToListAsync(ct);
         }
