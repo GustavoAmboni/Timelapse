@@ -28,7 +28,7 @@ namespace Timelapse.CLI.Commands
 
         public override async Task<int> ExecuteAsync(CommandContext context, Settings settings)
         {
-            var item = await _itemService.GetAsNoTracking(settings.Name, default);
+            var item = await _itemService.Get(settings.Name, default);
 
             if (item is null)
             {

@@ -21,6 +21,7 @@ namespace Timelapse.CLI.Application.ApplicationServices
         public async Task<Item?> Get(string name, CancellationToken ct)
         {
             return await _context.Items
+                .Include(w => w.Periods)
                 .Where(w => w.Name == name)
                 .FirstOrDefaultAsync(ct);
         }
