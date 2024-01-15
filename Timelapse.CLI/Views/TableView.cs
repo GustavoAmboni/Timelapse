@@ -14,6 +14,7 @@ namespace Timelapse.CLI.Views
                 "Name",
                 "Started",
                 "Stoped",
+                "Duration",
                 "Comment");
 
             foreach (var result in periods.Select((value, i) => new { Index = i, Value = value }))
@@ -23,6 +24,7 @@ namespace Timelapse.CLI.Views
                     result.Value.Item.Name,
                     result.Value.StartedAt.ToLocalTime().ToString("g"),
                     result.Value.StoppedAt?.ToLocalTime().ToString("g") ?? "-",
+                    result.Value.GetDuration().ToString(@"hh\:mm\:ss"),
                     result.Value.Commentary ?? string.Empty);
             }
 
@@ -45,7 +47,7 @@ namespace Timelapse.CLI.Views
                     result.Index.ToString(),
                     result.Value.Name,
                     result.Value.IsRunning() ? "Running" : "Stopped",
-                    result.Value.GetTotalDuration().ToString("g")
+                    result.Value.GetTotalDuration().ToString(@"hh\:mm\:ss")
                 );
             }
 
