@@ -19,5 +19,11 @@
         {
             return Periods.Last().StoppedAt is null;
         }
+
+        public bool HasAnchor()
+        {
+            return !string.IsNullOrWhiteSpace(Anchor) 
+                && Uri.IsWellFormedUriString(Anchor, UriKind.RelativeOrAbsolute);
+        }
     }
 }

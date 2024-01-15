@@ -69,8 +69,8 @@ namespace Timelapse.CLI.Application.ApplicationServices
         {
             return await _context.Periods
                 .Include(i => i.Item)
-                .Take(take)
                 .OrderByDescending(i => i.StartedAt)
+                .Take(take)
                 .AsNoTracking()
                 .ToListAsync(ct);
         }
