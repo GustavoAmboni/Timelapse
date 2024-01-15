@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Spectre.Console.Cli;
 using Timelapse.CLI.Application.ApplicationServices;
@@ -31,7 +32,6 @@ namespace Timelapse.CLI
                     .WithExample("start", "Test", "Testing somethig")
                     .WithExample("start", "Test", "Testing somethig", "--link", "http://google.com")
                     .WithExample("t", "Test", "Testing somethig", "-l", "http://google.com");
-
 
                 config.AddCommand<ListCommand>("list")
                     .WithAlias("l")
