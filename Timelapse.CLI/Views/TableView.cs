@@ -21,7 +21,9 @@ namespace Timelapse.CLI.Views
             {
                 table.AddRow(
                     result.Index.ToString(),
-                    result.Value.Item.Name,
+                    result.Value.Item.HasAnchor() ? 
+                        $"[link={result.Value.Item.Anchor}]{result.Value.Item.Name}[/]" 
+                        : result.Value.Item.Name,
                     result.Value.StartedAt.ToLocalTime().ToString("g"),
                     result.Value.StoppedAt?.ToLocalTime().ToString("g") ?? "-",
                     result.Value.GetDuration().ToString(@"hh\:mm\:ss"),
@@ -45,7 +47,9 @@ namespace Timelapse.CLI.Views
             {
                 table.AddRow(
                     result.Index.ToString(),
-                    result.Value.Name,
+                    result.Value.HasAnchor() ? 
+                        $"[link={result.Value.Anchor}]{result.Value.Name}[/]" 
+                        : result.Value.Name,
                     result.Value.IsRunning() ? "Running" : "Stopped",
                     result.Value.GetTotalDuration().ToString(@"hh\:mm\:ss")
                 );
