@@ -10,7 +10,7 @@ namespace Timelapse.CLI.Commands
         {
             [CommandOption("-s|--start")]
             public string? StartPeriod { get; set; }
-            
+
             [CommandOption("-e|--end")]
             public string? EndPeriod { get; set; }
         }
@@ -27,7 +27,7 @@ namespace Timelapse.CLI.Commands
                     return 0;
                 }
                 else
-                { 
+                {
                     ErrorView.Show("You have to inform the Starting Period when you already informed the End Period");
                     return -1;
                 }
@@ -48,7 +48,7 @@ namespace Timelapse.CLI.Commands
                 }
             }
 
-            if(endPeriod < startPeriod)
+            if (endPeriod < startPeriod)
             {
                 ErrorView.Show("The End Period cannot be older than the start period");
                 return -1;

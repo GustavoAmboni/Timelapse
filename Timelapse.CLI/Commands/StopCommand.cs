@@ -1,7 +1,6 @@
 ﻿using Spectre.Console.Cli;
 using System.ComponentModel;
 using Timelapse.CLI.Application.ApplicationServices.Interfaces;
-using Timelapse.CLI.Entities;
 using Timelapse.CLI.Views;
 
 namespace Timelapse.CLI.Commands
