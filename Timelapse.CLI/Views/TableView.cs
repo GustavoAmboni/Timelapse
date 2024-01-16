@@ -17,20 +17,27 @@ namespace Timelapse.CLI.Views
                 "Duration",
                 "Comment");
 
-            foreach (var result in periods.Select((value, i) => new { Index = i, Value = value }))
+            for (var i = 0; i < periods.Count(); i++)
             {
+                var period = periods.ElementAt(i);
+
                 table.AddRow(
-                    result.Index.ToString(),
-                    result.Value.Item.HasAnchor() ? 
-                        $"[link={result.Value.Item.Anchor}]{result.Value.Item.Name}[/]" 
-                        : result.Value.Item.Name,
-                    result.Value.StartedAt.ToLocalTime().ToString("g"),
-                    result.Value.StoppedAt?.ToLocalTime().ToString("g") ?? "-",
-                    result.Value.GetDuration().ToString(@"hh\:mm\:ss"),
-                    result.Value.Commentary ?? string.Empty);
+                    (i + 1).ToString(),
+                    period.Item.HasAnchor() ?
+                        $"[link={period.Item.Anchor}]{period.Item.Name}[/]"
+                        : period.Item.Name,
+                    period.StartedAt.ToLocalTime().ToString("g"),
+                    period.StoppedAt?.ToLocalTime().ToString("g") ?? "-",
+                    period.GetDuration().ToString(@"hh\:mm\:ss"),
+                    period.Commentary ?? string.Empty);
             }
 
             AnsiConsole.Write(table);
+        }
+
+        public static void Show(Period period)
+        {
+            Show([period]);
         }
 
         public static void Show(IEnumerable<Item> items)
@@ -43,15 +50,17 @@ namespace Timelapse.CLI.Views
                 "Status",
                 "Duration");
 
-            foreach (var result in items.Select((value, i) => new { Index = i, Value = value }))
+            for (var i = 0; i < items.Count(); i++)
             {
+                var item = items.ElementAt(i);
+
                 table.AddRow(
-                    result.Index.ToString(),
-                    result.Value.HasAnchor() ? 
-                        $"[link={result.Value.Anchor}]{result.Value.Name}[/]" 
-                        : result.Value.Name,
-                    result.Value.IsRunning() ? "Running" : "Stopped",
-                    result.Value.GetTotalDuration().ToString(@"hh\:mm\:ss")
+                    (i + 1).ToString(),
+                    item.HasAnchor() ?
+                        $"[link={item.Anchor}]{item.Name}[/]"
+                        : item.Name,
+                    item.IsRunning() ? "Running" : "Stopped",
+                    item.GetTotalDuration().ToString(@"hh\:mm\:ss")
                 );
             }
 
