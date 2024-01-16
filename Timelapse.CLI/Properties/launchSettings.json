@@ -6,7 +6,15 @@
     },
     "Start": {
       "commandName": "Project",
-      "commandLineArgs": "start \"Teste do Juca\" --description \"Testando a atividade\""
+      "commandLineArgs": "start Test \"Testing activity\""
+    },
+    "List": {
+      "commandName": "Project",
+      "commandLineArgs": "list -s 01/01/2022 -e 01/01/2021\r\n"
+    },
+    "Stop": {
+      "commandName": "Project",
+      "commandLineArgs": "stop \"lunch break\" -d 22:30"
     }
   }
 }
