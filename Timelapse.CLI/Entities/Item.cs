@@ -22,8 +22,9 @@
 
         public bool HasAnchor()
         {
-            return !string.IsNullOrWhiteSpace(Anchor) 
-                && Uri.IsWellFormedUriString(Anchor, UriKind.RelativeOrAbsolute);
+            return !string.IsNullOrWhiteSpace(Anchor)
+                && Uri.TryCreate(Anchor, UriKind.Absolute, out var uriResult)
+                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
         }
     }
 }

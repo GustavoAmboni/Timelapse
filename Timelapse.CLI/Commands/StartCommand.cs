@@ -10,17 +10,21 @@ namespace Timelapse.CLI.Commands
     {
         public class Settings : CommandSettings
         {
+            [Description("Name of the item")]
             [CommandArgument(0, "<Name>")]
             public string Name { get; init; } = default!;
 
+            [Description("Description of the item")]
             [CommandArgument(1, "[Description]")]
             [DefaultValue("")]
             public string Description { get; init; } = default!;
 
+            [Description("A link to an web page")]
             [CommandOption("-l|--link|-a|--anchor")]
             [DefaultValue("")]
             public string Anchor { get; init; } = default!;
 
+            [Description("A date to manually start the item (must be older than the last tracking end date of the item)")]
             [CommandOption("-d|--date")]
             [DefaultValue("")]
             public string Date { get; init; } = default!;
