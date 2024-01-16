@@ -10,7 +10,7 @@
     },
     "List": {
       "commandName": "Project",
-      "commandLineArgs": "list"
+      "commandLineArgs": "list -s 01/01/2022 -e 01/01/2021\r\n"
     },
     "Stop": {
       "commandName": "Project",
