@@ -52,6 +52,7 @@ namespace Timelapse.CLI.Commands
             }
 
             period.StoppedAt = stopedAt.ToUniversalTime();
+            period.Commentary = settings.Commentary;
 
             period = await _periodService.Update(period, default);
 
