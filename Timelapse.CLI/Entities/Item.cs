@@ -19,5 +19,12 @@
         {
             return Periods.Last().StoppedAt is null;
         }
+
+        public bool HasAnchor()
+        {
+            return !string.IsNullOrWhiteSpace(Anchor)
+                && Uri.TryCreate(Anchor, UriKind.Absolute, out var uriResult)
+                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+        }
     }
 }

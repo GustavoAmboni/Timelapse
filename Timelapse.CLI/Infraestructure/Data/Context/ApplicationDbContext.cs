@@ -22,10 +22,8 @@ namespace Timelapse.CLI.Infraestructure.Data.Context
                 Directory.CreateDirectory(directory);
                 File.Create(DbPath).Dispose();
             }
-#if DEBUG
-            //Database.EnsureDeleted();
-#endif
-            Database.EnsureCreated();
+
+            Database.Migrate();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
