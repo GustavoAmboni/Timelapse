@@ -15,5 +15,6 @@ namespace Timelapse.CLI.Application.ApplicationServices.Interfaces
         Task<Item> Update(Item item, CancellationToken ct);
         ValueTask<bool> Exists(string name, CancellationToken ct);
         ValueTask<bool> IsRunning(string name, CancellationToken ct);
+        ValueTask<bool> IsAnyRunning(CancellationToken ct);
     }
 }

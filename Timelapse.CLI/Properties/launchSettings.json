@@ -14,7 +14,7 @@
     },
     "Stop": {
       "commandName": "Project",
-      "commandLineArgs": "stop \"lunch break\""
+      "commandLineArgs": "stop \"lunch break\" -d 22:30"
     }
   }
 }

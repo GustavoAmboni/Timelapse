@@ -76,13 +76,12 @@ namespace Timelapse.CLI.Application.ApplicationServices
 
         public async ValueTask<bool> IsRunning(string name, CancellationToken ct)
         {
-            var item = await _context.Periods
+            return await _context.Periods
                 .AsNoTracking()
                 .Where(w => w.Item.Name == name)
                 .OrderBy(o => o.PeriodId)
-                .LastOrDefaultAsync(ct);
-
-            return item?.StoppedAt is null;
+                .Take(1)
+                .AnyAsync(w => !w.StoppedAt.HasValue, ct);
         }
 
         public async Task Remove(string name, CancellationToken ct)
@@ -91,6 +90,13 @@ namespace Timelapse.CLI.Application.ApplicationServices
 
             _context.Remove(item);
             await _context.SaveChangesAsync(ct);
+        }
+
+        public async ValueTask<bool> IsAnyRunning(CancellationToken ct)
+        {
+            return await _context.Periods
+                .AsNoTracking()
+                .AnyAsync(w => !w.StoppedAt.HasValue, ct);
         }
     }
 }
