@@ -12,9 +12,12 @@ namespace Timelapse.CLI.Commands
 
         public class Settings : CommandSettings
         {
+            [Description("A commentary to add to the tracking period")]
             [CommandArgument(0, "[Commentary]")]
             public string? Commentary { get; set; } = default!;
 
+
+            [Description("A date to manually stop the item (must be older than the start of tracking period of the item)")]
             [CommandOption("-d|--date")]
             [DefaultValue("")]
             public string Date { get; init; } = default!;

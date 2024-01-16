@@ -1,4 +1,5 @@
 ﻿using Spectre.Console.Cli;
+using System.ComponentModel;
 using Timelapse.CLI.Application.ApplicationServices.Interfaces;
 using Timelapse.CLI.Views;
 
@@ -8,9 +9,11 @@ namespace Timelapse.CLI.Commands
     {
         public class Settings : CommandSettings
         {
+            [Description("A valid date to list items older than this date")]
             [CommandOption("-s|--start")]
             public string? StartPeriod { get; set; }
 
+            [Description("A valid date to list items newer than this date (optional, default set to 1 day newer than the start)")]
             [CommandOption("-e|--end")]
             public string? EndPeriod { get; set; }
         }

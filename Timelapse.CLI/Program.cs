@@ -20,6 +20,7 @@ namespace Timelapse.CLI
 
             app.Configure(config =>
             {
+                config.SetApplicationName("Timelapse");
 #if DEBUG
                 config.PropagateExceptions();
                 config.ValidateExamples();
@@ -28,17 +29,51 @@ namespace Timelapse.CLI
                 config.AddCommand<StartCommand>("start")
                     .WithAlias("track")
                     .WithAlias("t")
-                    .WithExample("start", "Test", "Testing somethig")
-                    .WithExample("start", "Test", "Testing somethig", "--link", "http://google.com")
-                    .WithExample("t", "Test", "Testing somethig", "-l", "http://google.com");
+                    .WithDescription("Creates a new or tracks an old item by the name")
+                    .WithExample("start",
+                        "\"Take the garbage out\"",
+                        "\"The garbage is smelly and needs to be taken out\"")
+                    .WithExample("track",
+                        "\"Wash the dishes\"",
+                        "\"I need to buy a dish washing machine\"",
+                        "--link",
+                        "https://open.spotify.com")
+                    .WithExample("t",
+                        "\"Running 10 km\"",
+                        "-a",
+                        "https://open.spotify.com")
+                    .WithExample("t",
+                        "\"Swimming for an hour\"",
+                        "-a",
+                        "https://open.spotify.com",
+                        "--date",
+                        "19:00")
+                    .WithExample("t",
+                        "\"Buying clothes\"",
+                        "-d",
+                        "\"22/01/2023 07:00am\"");
 
                 config.AddCommand<ListCommand>("list")
                     .WithAlias("l")
-                    .WithExample("list");
+                    .WithDescription("Lists the last 5 items by default or gets items by a date range")
+                    .WithExample("list")
+                    .WithExample("list", "--start", "07:00", "--end", "19:00")
+                    .WithExample("list", "--start", "07:00am", "--end", "07:00pm")
+                    .WithExample("list", "-s", "07:00", "-e", "19:00")
+                    .WithExample("l", "-s", "07:00am", "-e", "07:00pm")
+                    .WithExample("l", "--start", "07:00")
+                    .WithExample("l", "-s", "19:00");
 
                 config.AddCommand<StopCommand>("stop")
                     .WithAlias("finish")
-                    .WithExample("stop", "Pause for lunch");
+                    .WithAlias("f")
+                    .WithDescription("Stops the last running item")
+                    .WithExample("stop", "\"Pause for lunch\"")
+                    .WithExample("finish", "\"End of the day\"")
+                    .WithExample("f", "\"Pause for 10 minutes\"")
+                    .WithExample("f", "\"Coffe break\"", "--date", "19:00")
+                    .WithExample("f", "\"Pomodoro break\"", "--date", "07:00pm")
+                    .WithExample("stop", "\"Be right back\"", "--date", "\"22/04/2023 07:00pm\"");
             });
 
             await app.RunAsync(args);
